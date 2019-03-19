@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mbed OS Configuration</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+
+<body>
+  <div id="header">
+    <a href="/"><img id="logo" src="/ARMmbedLogo.svg"></a>
+  </div>
+
+  <h1>Mbed OS configuration ({{name}})</h1>
+
+  <section class="menu" id="main-menu">
+
+    <h2><span id="title">Menu</span></h2>
+
+    <ul class="options">
+    </ul>
+  </section>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+      const socket = io.connect(location.origin);
+
+      const macros = {{{macros}}};
+      const config = {{{config}}};
+
+      let configByGroup = config.reduce((curr, c) => {
+        if (!curr[c.definedBy]) {
+          curr[c.definedBy] = [];
+        }
+        curr[c.definedBy].push(c);
+        return curr;
+      }, {});
+
+      function loadMenu(name) {
+        location.hash = '#' + name;
+        document.querySelector('#main-menu .options').innerHTML = '';
+        document.querySelector('#main-menu #title').textContent = name;
+        configByGroup[name].forEach(g => {
+          var el = document.createElement('li');
+          var val = document.createElement('span');
+          val.classList.add('value');
+          val.textContent = typeof g.value !== 'undefined' ? g.value : 'Not Set';
+
+          var name = document.createElement('span');
+          name.classList.add('name');
+          name.textContent = g.name;
+
+          var desc = document.createElement('span');
+          if (g.description) {
+            desc.textContent += g.description;
+          }
+          el.appendChild(val);
+          el.appendChild(name);
+          el.appendChild(desc);
+          el.onclick = function() {
+            let v = prompt('Enter new value for ' + g.name, g.value || '');
+            if (v === null) return;
+
+            val.textContent = v;
+            g.value = v;
+            socket.emit('change-value', g.name, v);
+          }
+          document.querySelector('#main-menu .options').appendChild(el);
+        });
+      }
+
+      function loadMain() {
+        document.querySelector('#main-menu .options').innerHTML = '';
+        document.querySelector('#main-menu #title').textContent = 'Main menu';
+        Object.keys(configByGroup).sort().forEach(g => {
+          var el = document.createElement('li');
+          el.textContent = g;
+          el.onclick = () => loadMenu(g);
+          document.querySelector('#main-menu .options').appendChild(el);
+        });
+      }
+
+      function handleHash() {
+        if (!location.hash || location.hash === '' || location.hash === '#') {
+          loadMain();
+        }
+        else {
+          loadMenu(location.hash.substr(1));
+        }
+      }
+
+      window.onhashchange = handleHash;
+
+      handleHash();
+
+      console.log(configByGroup);
+  </script>
+
+</body>
+</html>

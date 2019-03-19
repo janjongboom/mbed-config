@@ -1,0 +1,1510 @@
+Using ROM regions bootloader, header, application in this build.
+  Region bootloader: size 0x9000, offset 0x0
+  Region header: size 0x70, offset 0x10000
+  Region application: size 0xefc00, offset 0x10400
+Configuration parameters
+------------------------
+Name: app.button-pressed-state
+    Description: Value of the button when pressed
+    Defined by: application
+    No value set
+Name: app.format-storage-layer-on-error
+    Description: Whether to format the storage layer when it cannot be read - always disable for production devices!
+    Defined by: application
+    Macro name: MBED_CONF_APP_FORMAT_STORAGE_LAYER_ON_ERROR
+    Value: 1 (set by application)
+Name: app.main-stack-size
+    Defined by: application
+    Macro name: MBED_CONF_APP_MAIN_STACK_SIZE
+    Value: 6500 (set by application)
+Name: app.no_led
+    Description: This flag disables the heartbeat thread in tests. This is useful for platforms that don't have an LED or the LED is used for other functionality like LED on the SPI clockline etc
+    Defined by: application
+    No value set
+Name: app.use-button
+    Description: Whether the target has a button
+    Defined by: application
+    Macro name: USE_BUTTON
+    Value: 1 (set by application)
+Name: atmel-rf.assume-spaced-spi
+    Description: If not using SPI spacing API, assume platform has widely-spaced bytes in bursts, so use full clock speed rather than low.
+    Defined by: library:atmel-rf
+    No value set
+Name: atmel-rf.full-spi-speed
+    Description: Maximum SPI clock speed (Hz), as long as sufficient inter-byte spacing
+    Defined by: library:atmel-rf
+    Macro name: MBED_CONF_ATMEL_RF_FULL_SPI_SPEED
+    Value: 7500000 (set by library:atmel-rf)
+Name: atmel-rf.full-spi-speed-byte-spacing
+    Description: Required byte spacing in nanoseconds if full SPI speed is in use
+    Defined by: library:atmel-rf
+    Macro name: MBED_CONF_ATMEL_RF_FULL_SPI_SPEED_BYTE_SPACING
+    Value: 250 (set by library:atmel-rf)
+Name: atmel-rf.irq-thread-stack-size
+    Description: The stack size of the Thread serving the Atmel RF interrupts
+    Defined by: library:atmel-rf
+    Macro name: MBED_CONF_ATMEL_RF_IRQ_THREAD_STACK_SIZE
+    Value: 1024 (set by library:atmel-rf)
+Name: atmel-rf.low-spi-speed
+    Description: Maximum SPI clock speed (Hz) if no inter-byte spacing
+    Defined by: library:atmel-rf
+    Macro name: MBED_CONF_ATMEL_RF_LOW_SPI_SPEED
+    Value: 3750000 (set by library:atmel-rf)
+Name: atmel-rf.provide-default
+    Description: Provide default NanostackRfpy. [true/false]
+    Defined by: library:atmel-rf
+    No value set
+Name: atmel-rf.use-spi-spacing-api
+    Description: Use SPI spacing API proposed in https://github.com/ARMmbed/mbed-os/pull/5353 to ensure spacing between bytes - either run at full speed with spacing, or low with no spacing
+    Defined by: library:atmel-rf
+    No value set
+Name: cellular.debug-at
+    Description: Enable AT debug prints
+    Defined by: library:cellular
+    No value set
+Name: cellular.radio-access-technology
+    Description: Radio access technology to use. Value in integer: GSM=0, GSM_COMPACT=1, UTRAN=2, EGPRS=3, HSDPA=4, HSUPA=5, HSDPA_HSUPA=6, E_UTRAN=7, CATM1=8 ,NB1=9
+    Defined by: library:cellular
+    No value set
+Name: cellular.random_max_start_delay
+    Description: Maximum random delay value used in start-up sequence in milliseconds
+    Defined by: library:cellular
+    No value set
+Name: cellular.use-apn-lookup
+    Description: Use APN database lookup
+    Defined by: library:cellular
+    Macro name: MBED_CONF_CELLULAR_USE_APN_LOOKUP
+    Value: 1 (set by library:cellular)
+Name: configuration-store.storage_disable
+    Description: Configuration parameter to disable flash storage if present. Default = 0, implying that by default flash storage is used if present.
+    Defined by: library:configuration-store
+    No value set
+Name: device-management.auto_partition
+    Description: Optional macro automatic SD card partitioning if required. Partioning will be triggered only if initialization of available partitions fail. This requires partition_mode to be enabled.
+    Defined by: library:device-management
+    No value set
+Name: device-management.developer-mode
+    Description: Enable Developer mode to skip Factory enrollment
+    Defined by: library:device-management
+    Macro name: MBED_CONF_DEVICE_MANAGEMENT_DEVELOPER_MODE
+    Value: 1 (set by library:device-management)
+Name: device-management.flash-size
+    Description: Total size of internal flash. Only used in this config to help the definition of other macros.
+    Defined by: library:device-management
+    Macro name: MBED_CONF_APP_FLASH_SIZE
+    Value: (1024*1024) (set by application[K64F])
+Name: device-management.flash-start-address
+    Description: Start address of internal flash. Only used in this config to help the definition of other macros.
+    Defined by: library:device-management
+    Macro name: MBED_CONF_APP_FLASH_START_ADDRESS
+    Value: 0x0 (set by application[K64F])
+Name: device-management.mbed_client_user_config_file
+    Description: mbed_client_user_config_file
+    Defined by: library:device-management
+    Macro name: MBED_CLIENT_USER_CONFIG_FILE
+    Value: MBED_CLOUD_CLIENT_USER_CONFIG_FILE (set by library:device-management)
+Name: device-management.mbedtls-user-config-file
+    Description: Defines which TLS configuration the board should use.
+    Defined by: library:device-management
+    Macro name: MBEDTLS_USER_CONFIG_FILE
+    Value: "mbedTLSConfig_mbedOS.h" (set by library:device-management)
+Name: device-management.mcc_transport_mode
+    Description: 0 = TCP, 1 = TCP_QUEUE_MODE, 2 = UDP, 3 = UDP_QUEUE_MODE
+    Defined by: library:device-management
+    No value set
+Name: device-management.mcc_user_config_file
+    Description: mcc_user_config_file
+    Defined by: library:device-management
+    Macro name: MBED_CLOUD_CLIENT_USER_CONFIG_FILE
+    Value: "mbed_cloud_client_user_config.h" (set by library:device-management)
+Name: device-management.pal-udp-mtu-size
+    Description: Enforced usage of MTU limits
+    Defined by: library:device-management
+    No value set
+Name: device-management.pal-user-defined-configuration
+    Description: Defines which PAL configuration the board should use.
+    Defined by: library:device-management
+    Macro name: PAL_USER_DEFINED_CONFIGURATION
+    Value: "sotp_fs_config_MbedOS.h" (set by library:device-management)
+Name: device-management.pal_dtls_peer_min_timeout
+    Description: pal_dtls_peer_min_timeout
+    Defined by: library:device-management
+    Macro name: PAL_DTLS_PEER_MIN_TIMEOUT
+    Value: 5000 (set by library:device-management)
+Name: device-management.pal_fs_mount_point_primary
+    Description: pal_fs_mount_point_primary
+    Defined by: library:device-management
+    Macro name: PAL_FS_MOUNT_POINT_PRIMARY
+    Value: "/fs" (set by library:device-management)
+Name: device-management.pal_number_of_partition
+    Description: Optional macro PAL_NUMBER_OF_PARTITIONS
+    Defined by: library:device-management
+    No value set
+Name: device-management.partition_mode
+    Description: Macro for single or dual partition mode. This is supposed to be used with storage storage for data e.g. SD card. This enabled by default.
+    Defined by: library:device-management
+    No value set
+Name: device-management.primary_partition_size
+    Description: Optional macro PRIMARY_PARTITION_SIZE in bytes, default is 1GB. This requires auto_partition to be enabled.
+    Defined by: library:device-management
+    No value set
+Name: device-management.secondary_partition_size
+    Description: Optional macro SECONDARY_PARTITION_SIZE in bytes, deault is 1GB. This requires auto_partition to be enabled.
+    Defined by: library:device-management
+    No value set
+Name: device-management.sotp-num-sections
+    Description: Number of SOTP sections
+    Defined by: library:device-management
+    Macro name: PAL_INT_FLASH_NUM_SECTIONS
+    Value: 2 (set by library:device-management)
+Name: device-management.sotp-section-1-address
+    Description: Flash sector address for SOTP sector 1
+    Defined by: library:device-management
+    Macro name: PAL_INTERNAL_FLASH_SECTION_1_ADDRESS
+    Value: (MBED_CONF_APP_FLASH_START_ADDRESS + MBED_CONF_APP_FLASH_SIZE - 2*(4*1024)) (set by application[K64F])
+Name: device-management.sotp-section-1-size
+    Description: Flash sector size for SOTP sector 1
+    Defined by: library:device-management
+    Macro name: PAL_INTERNAL_FLASH_SECTION_1_SIZE
+    Value: (4*1024) (set by application[K64F])
+Name: device-management.sotp-section-2-address
+    Description: Flash sector address for SOTP sector 2
+    Defined by: library:device-management
+    Macro name: PAL_INTERNAL_FLASH_SECTION_2_ADDRESS
+    Value: (MBED_CONF_APP_FLASH_START_ADDRESS + MBED_CONF_APP_FLASH_SIZE - 1*(4*1024)) (set by application[K64F])
+Name: device-management.sotp-section-2-size
+    Description: Flash sector size for SOTP sector 2
+    Defined by: library:device-management
+    Macro name: PAL_INTERNAL_FLASH_SECTION_2_SIZE
+    Value: (4*1024) (set by application[K64F])
+Name: device-management.use-stl
+    Description: Whether to use the C++ STL functions. If you're resource constrained and are not using STL string / vector in your application, disable it.
+    Defined by: library:device-management
+    No value set
+Name: drivers.uart-serial-rxbuf-size
+    Description: Default RX buffer size for a UARTSerial instance (unit Bytes))
+    Defined by: library:drivers
+    Macro name: MBED_CONF_DRIVERS_UART_SERIAL_RXBUF_SIZE
+    Value: 256 (set by library:drivers)
+Name: drivers.uart-serial-txbuf-size
+    Description: Default TX buffer size for a UARTSerial instance (unit Bytes))
+    Defined by: library:drivers
+    Macro name: MBED_CONF_DRIVERS_UART_SERIAL_TXBUF_SIZE
+    Value: 256 (set by library:drivers)
+Name: esp8266.cts
+    Description: CTS pin for serial connection, defaults to Not Connected
+    Defined by: library:esp8266
+    No value set
+Name: esp8266.debug
+    Description: Enable debug logs. [true/false]
+    Defined by: library:esp8266
+    No value set
+Name: esp8266.provide-default
+    Description: Provide default WifiInterface. [true/false]
+    Defined by: library:esp8266
+    No value set
+Name: esp8266.rst
+    Description: RESET pin for the modem, defaults to Not Connected
+    Defined by: library:esp8266
+    No value set
+Name: esp8266.rts
+    Description: RTS pin for serial connection, defaults to Not Connected
+    Defined by: library:esp8266
+    No value set
+Name: esp8266.rx
+    Description: RX pin for serial connection. D0 assumed if Arduino Form Factor, needs to be set/overwritten otherwise
+    Defined by: library:esp8266
+    No value set
+Name: esp8266.socket-bufsize
+    Description: Max socket data heap usage
+    Defined by: library:esp8266
+    Macro name: MBED_CONF_ESP8266_SOCKET_BUFSIZE
+    Value: 8192 (set by library:esp8266)
+Name: esp8266.tx
+    Description: TX pin for serial connection. D1 assumed if Arduino Form Factor, needs to be set/overwritten otherwise
+    Defined by: library:esp8266
+    No value set
+Name: events.present
+    Defined by: library:events
+    Macro name: MBED_CONF_EVENTS_PRESENT
+    Value: 1 (set by library:events)
+Name: events.shared-dispatch-from-application
+    Description: No thread created for shared event queue - application will call dispatch from another thread (eg dispatch_forever at end of main)
+    Defined by: library:events
+    No value set
+Name: events.shared-eventsize
+    Description: Event buffer size (bytes) for shared event queue
+    Defined by: library:events
+    Macro name: MBED_CONF_EVENTS_SHARED_EVENTSIZE
+    Value: 256 (set by library:events)
+Name: events.shared-highprio-eventsize
+    Description: Event buffer size (bytes) for shared high-priority event queue
+    Defined by: library:events
+    Macro name: MBED_CONF_EVENTS_SHARED_HIGHPRIO_EVENTSIZE
+    Value: 256 (set by library:events)
+Name: events.shared-highprio-stacksize
+    Description: Stack size (bytes) for shared high-priority event queue thread
+    Defined by: library:events
+    Macro name: MBED_CONF_EVENTS_SHARED_HIGHPRIO_STACKSIZE
+    Value: 1024 (set by library:events)
+Name: events.shared-stacksize
+    Description: Stack size (bytes) for shared event queue thread
+    Defined by: library:events
+    Macro name: MBED_CONF_EVENTS_SHARED_STACKSIZE
+    Value: 2048 (set by library:events)
+Name: events.use-lowpower-timer-ticker
+    Description: Enable use of low power timer and ticker classes in non-RTOS builds. May reduce the accuracy of the event queue. In RTOS builds, the RTOS tick count is used, and this configuration option has no effect.
+    Defined by: library:events
+    No value set
+Name: filesystem.present
+    Defined by: library:filesystem
+    Macro name: MBED_CONF_FILESYSTEM_PRESENT
+    Value: 1 (set by library:filesystem)
+Name: ism43362.provide-default
+    Description: Provide default WifiInterface. [true/false]
+    Defined by: library:ism43362
+    No value set
+Name: ism43362.wifi-dataready
+    Description: ISM43362 dataready
+    Defined by: library:ism43362
+    Macro name: MBED_CONF_ISM43362_WIFI_DATAREADY
+    Value: NC (set by library:ism43362)
+Name: ism43362.wifi-debug
+    Description: Defines whether logging is on or off
+    Defined by: library:ism43362
+    No value set
+Name: ism43362.wifi-miso
+    Description: SPI-MISO connection to external device
+    Defined by: library:ism43362
+    Macro name: MBED_CONF_ISM43362_WIFI_MISO
+    Value: NC (set by library:ism43362)
+Name: ism43362.wifi-mosi
+    Description: SPI-MOSI connection to external device
+    Defined by: library:ism43362
+    Macro name: MBED_CONF_ISM43362_WIFI_MOSI
+    Value: NC (set by library:ism43362)
+Name: ism43362.wifi-nss
+    Description: SPI chip select of external device
+    Defined by: library:ism43362
+    Macro name: MBED_CONF_ISM43362_WIFI_NSS
+    Value: NC (set by library:ism43362)
+Name: ism43362.wifi-reset
+    Description: ISM43362 reset
+    Defined by: library:ism43362
+    Macro name: MBED_CONF_ISM43362_WIFI_RESET
+    Value: NC (set by library:ism43362)
+Name: ism43362.wifi-sclk
+    Description: SPI-CLOCK connection to external device
+    Defined by: library:ism43362
+    Macro name: MBED_CONF_ISM43362_WIFI_SCLK
+    Value: NC (set by library:ism43362)
+Name: ism43362.wifi-wakeup
+    Description: ISM43362 wakeup
+    Defined by: library:ism43362
+    Macro name: MBED_CONF_ISM43362_WIFI_WAKEUP
+    Value: NC (set by library:ism43362)
+Name: kinetis-emac.rx-ring-len
+    Defined by: library:kinetis-emac
+    Macro name: MBED_CONF_KINETIS_EMAC_RX_RING_LEN
+    Value: 2 (set by library:kinetis-emac)
+Name: kinetis-emac.tx-ring-len
+    Defined by: library:kinetis-emac
+    Macro name: MBED_CONF_KINETIS_EMAC_TX_RING_LEN
+    Value: 1 (set by library:kinetis-emac)
+Name: littlefs.block_size
+    Description: Size of an erasable block. This does not impact ram consumption and may be larger than the physical erase size. However, this should be kept small as each file currently takes up an entire block.
+    Defined by: library:littlefs
+    Macro name: MBED_LFS_BLOCK_SIZE
+    Value: 512 (set by library:littlefs)
+Name: littlefs.enable_assert
+    Description: Enables asserts, true = enabled, false = disabled, null = disabled only in release builds
+    Defined by: library:littlefs
+    No value set
+Name: littlefs.enable_debug
+    Description: Enables debug logging, true = enabled, false = disabled, null = disabled only in release builds
+    Defined by: library:littlefs
+    No value set
+Name: littlefs.enable_error
+    Description: Enables error logging, true = enabled, false = disabled, null = disabled only in release builds
+    Defined by: library:littlefs
+    No value set
+Name: littlefs.enable_info
+    Description: Enables info logging, true = enabled, false = disabled, null = disabled only in release builds
+    Defined by: library:littlefs
+    No value set
+Name: littlefs.enable_warn
+    Description: Enables warn logging, true = enabled, false = disabled, null = disabled only in release builds
+    Defined by: library:littlefs
+    No value set
+Name: littlefs.intrinsics
+    Description: Enable intrinsics for bit operations such as ctz, popc, and le32 conversion. Can be disabled to help debug toolchain issues
+    Defined by: library:littlefs
+    Macro name: MBED_LFS_INTRINSICS
+    Value: 1 (set by library:littlefs)
+Name: littlefs.lookahead
+    Description: Number of blocks to lookahead during block allocation. A larger lookahead reduces the number of passes required to allocate a block. The lookahead buffer requires only 1 bit per block so it can be quite large with little ram impact. Should be a multiple of 32.
+    Defined by: library:littlefs
+    Macro name: MBED_LFS_LOOKAHEAD
+    Value: 512 (set by library:littlefs)
+Name: littlefs.prog_size
+    Description: Minimum size of a block program. This determines the size of program buffers. This may be larger than the physical program size to improve performance by caching more of the block device.
+    Defined by: library:littlefs
+    Macro name: MBED_LFS_PROG_SIZE
+    Value: 64 (set by library:littlefs)
+Name: littlefs.read_size
+    Description: Minimum size of a block read. This determines the size of read buffers. This may be larger than the physical read size to improve performance by caching more of the block device.
+    Defined by: library:littlefs
+    Macro name: MBED_LFS_READ_SIZE
+    Value: 64 (set by library:littlefs)
+Name: lora.adr-on
+    Description: LoRaWAN Adaptive Data Rate, default: 1
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_ADR_ON
+    Value: 1 (set by library:lora)
+Name: lora.app-port
+    Description: LoRaWAN application port, default: 15
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_APP_PORT
+    Value: 15 (set by library:lora)
+Name: lora.application-eui
+    Description: Application IEEE EUI
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_APPLICATION_EUI
+    Value: {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} (set by library:lora)
+Name: lora.application-key
+    Description: AES encryption/decryption cipher application key
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_APPLICATION_KEY
+    Value: {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} (set by library:lora)
+Name: lora.appskey
+    Description: AES encryption/decryption cipher application session key
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_APPSKEY
+    Value: {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} (set by library:lora)
+Name: lora.automatic-uplink-message
+    Description: Stack will automatically send an uplink message when lora server requires immediate response
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_AUTOMATIC_UPLINK_MESSAGE
+    Value: 1 (set by library:lora)
+Name: lora.device-address
+    Description: Device address on the network
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_DEVICE_ADDRESS
+    Value: 0x00000000 (set by library:lora)
+Name: lora.device-eui
+    Description: Mote device IEEE EUI
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_DEVICE_EUI
+    Value: {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} (set by library:lora)
+Name: lora.downlink-preamble-length
+    Description: Number of whole preamble symbols needed to have a firm lock on the signal.
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_DOWNLINK_PREAMBLE_LENGTH
+    Value: 5 (set by library:lora)
+Name: lora.duty-cycle-on
+    Description: Enables/disables duty cycling. NOTE: Disable only for testing. Mandatory in many regions.
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_DUTY_CYCLE_ON
+    Value: 1 (set by library:lora)
+Name: lora.duty-cycle-on-join
+    Description: Enables/disables duty cycling for JOIN requests (disabling requires duty-cycle-on to be disabled). NOTE: Disable only for testing!
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_DUTY_CYCLE_ON_JOIN
+    Value: 1 (set by library:lora)
+Name: lora.fsb-mask
+    Description: FSB mask for upstream [Only for US915 & AU915] Check lorawan/FSB_Usage.txt for more details
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_FSB_MASK
+    Value: {0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00FF} (set by library:lora)
+Name: lora.fsb-mask-china
+    Description: FSB mask for upstream [CN470 PHY] Check lorawan/FSB_Usage.txt for more details
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_FSB_MASK_CHINA
+    Value: {0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF} (set by library:lora)
+Name: lora.lbt-on
+    Description: Enables/disables LBT. NOTE: [This feature is not yet integrated].
+    Defined by: library:lora
+    No value set
+Name: lora.max-sys-rx-error
+    Description: Max. timing error fudge. The receiver will turn on in [-RxError : + RxError]
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_MAX_SYS_RX_ERROR
+    Value: 5 (set by library:lora)
+Name: lora.nb-trials
+    Description: Indicates how many times join can be tried, default: 12
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_NB_TRIALS
+    Value: 12 (set by library:lora)
+Name: lora.nwkskey
+    Description: AES encryption/decryption cipher network session key
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_NWKSKEY
+    Value: {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} (set by library:lora)
+Name: lora.over-the-air-activation
+    Description: When set to 1 the application uses the Over-the-Air activation procedure, default: true
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_OVER_THE_AIR_ACTIVATION
+    Value: 1 (set by library:lora)
+Name: lora.phy
+    Description: LoRa PHY region: EU868, AS923, AU915, CN470, CN779, EU433, IN865, KR920, US915
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_PHY
+    Value: EU868 (set by library:lora)
+Name: lora.public-network
+    Description: LoRaWAN will connect to a public network or private network, true = public network
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_PUBLIC_NETWORK
+    Value: 1 (set by library:lora)
+Name: lora.tx-max-size
+    Description: User application data buffer maximum size, default: 64, MAX: 255
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_TX_MAX_SIZE
+    Value: 64 (set by library:lora)
+Name: lora.uplink-preamble-length
+    Description: Number of preamble symbols to transmit. Default: 8
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_UPLINK_PREAMBLE_LENGTH
+    Value: 8 (set by library:lora)
+Name: lora.wakeup-time
+    Description: Time in (ms) the platform takes to wakeup from sleep/deep sleep state. This number is platform dependent
+    Defined by: library:lora
+    Macro name: MBED_CONF_LORA_WAKEUP_TIME
+    Value: 5 (set by library:lora)
+Name: lwip.addr-timeout
+    Description: On dual-stack system how long to additionally wait for other stack's address in seconds
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_ADDR_TIMEOUT
+    Value: 5 (set by library:lwip)
+Name: lwip.addr-timeout-mode
+    Description: Address timeout mode; true: wait both stack's addresses; false: wait for preferred stack's address
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_ADDR_TIMEOUT_MODE
+    Value: 1 (set by library:lwip)
+Name: lwip.debug-enabled
+    Description: Enable debug trace support
+    Defined by: library:lwip
+    No value set
+Name: lwip.default-thread-stacksize
+    Description: Stack size for lwip system threads
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_DEFAULT_THREAD_STACKSIZE
+    Value: 512 (set by library:lwip)
+Name: lwip.enable-ppp-trace
+    Description: Enable trace support for PPP interfaces
+    Defined by: library:lwip
+    No value set
+Name: lwip.ethernet-enabled
+    Description: Enable support for Ethernet interfaces
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_ETHERNET_ENABLED
+    Value: 1 (set by library:lwip)
+Name: lwip.ip-ver-pref
+    Description: On dual-stack system the preferred stack: 4 for IPv4 and 6 for IPv6
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_IP_VER_PREF
+    Value: 4 (set by library:lwip)
+Name: lwip.ipv4-enabled
+    Description: Enable IPv4
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_IPV4_ENABLED
+    Value: 1 (set by library:lwip)
+Name: lwip.ipv6-enabled
+    Description: Enable IPv6
+    Defined by: library:lwip
+    No value set
+Name: lwip.mem-size
+    Description: Size of heap (bytes) - used for outgoing packets, and also used by some drivers for reception. Current default (used if null here) is set to 1600 in opt.h, unless overridden by target Ethernet drivers.
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_MEM_SIZE
+    Value: 33270 (set by library:lwip[Freescale])
+Name: lwip.memp-num-tcp-seg
+    Description: Number of simultaneously queued TCP segments. Current default (used if null here) is set to 16 in opt.h, unless overridden by target Ethernet drivers.
+    Defined by: library:lwip
+    No value set
+Name: lwip.pbuf-pool-bufsize
+    Description: Size of pbufs in pool. If set to null, lwIP will base the size on the TCP MSS, which is 536 unless overridden by the target
+    Defined by: library:lwip
+    No value set
+Name: lwip.pbuf-pool-size
+    Description: Number of pbufs in pool - usually used for received packets, so this determines how much data can be buffered between reception and the application reading. If a driver uses PBUF_RAM for reception, less pool may be needed. Current default (used if null here) is set to 5 in lwipopts.h, unless overridden by target Ethernet drivers.
+    Defined by: library:lwip
+    No value set
+Name: lwip.ppp-enabled
+    Description: Enable support for PPP interfaces
+    Defined by: library:lwip
+    No value set
+Name: lwip.ppp-ipv4-enabled
+    Description: Enable support for ipv4 PPP interface
+    Defined by: library:lwip
+    Macro name: NSAPI_PPP_IPV4_AVAILABLE
+    Value: 1 (set by library:lwip)
+Name: lwip.ppp-ipv6-enabled
+    Description: Enable support for ipv6 PPP interface
+    Defined by: library:lwip
+    No value set
+Name: lwip.ppp-thread-stacksize
+    Description: Thread stack size for PPP
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_PPP_THREAD_STACKSIZE
+    Value: 768 (set by library:lwip)
+Name: lwip.socket-max
+    Description: Maximum number of open TCPServer, TCPSocket and UDPSocket instances allowed, including one used internally for DNS.  Each requires 236 bytes of pre-allocated RAM
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_SOCKET_MAX
+    Value: 4 (set by library:lwip)
+Name: lwip.tcp-enabled
+    Description: Enable TCP
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_TCP_ENABLED
+    Value: 1 (set by library:lwip)
+Name: lwip.tcp-maxrtx
+    Description: Maximum number of retransmissions of data segments.
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_TCP_MAXRTX
+    Value: 6 (set by library:lwip)
+Name: lwip.tcp-mss
+    Description: TCP Maximum segment size. Current default (used if null here) is set to 536 in opt.h, unless overridden by target Ethernet drivers.
+    Defined by: library:lwip
+    No value set
+Name: lwip.tcp-server-max
+    Description: Maximum number of open TCPServer instances allowed.  Each requires 72 bytes of pre-allocated RAM
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_TCP_SERVER_MAX
+    Value: 4 (set by library:lwip)
+Name: lwip.tcp-snd-buf
+    Description: TCP sender buffer space (bytes). Current default (used if null here) is set to (2 * TCP_MSS) in opt.h, unless overridden by target Ethernet drivers.
+    Defined by: library:lwip
+    No value set
+Name: lwip.tcp-socket-max
+    Description: Maximum number of open TCPSocket instances allowed.  Each requires 196 bytes of pre-allocated RAM
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_TCP_SOCKET_MAX
+    Value: 4 (set by library:lwip)
+Name: lwip.tcp-synmaxrtx
+    Description: Maximum number of retransmissions of SYN segments. Current default (used if null here) is set to 6 in opt.h
+    Defined by: library:lwip
+    No value set
+Name: lwip.tcp-wnd
+    Description: TCP sender buffer space (bytes). Current default (used if null here) is set to (4 * TCP_MSS) in opt.h, unless overridden by target Ethernet drivers.
+    Defined by: library:lwip
+    No value set
+Name: lwip.tcpip-thread-stacksize
+    Description: Stack size for lwip TCPIP thread
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_TCPIP_THREAD_STACKSIZE
+    Value: 1200 (set by library:lwip)
+Name: lwip.udp-socket-max
+    Description: Maximum number of open UDPSocket instances allowed, including one used internally for DNS.  Each requires 84 bytes of pre-allocated RAM
+    Defined by: library:lwip
+    Macro name: MBED_CONF_LWIP_UDP_SOCKET_MAX
+    Value: 4 (set by library:lwip)
+Name: lwip.use-mbed-trace
+    Description: Use mbed trace for debug, rather than printf
+    Defined by: library:lwip
+    No value set
+Name: mbed-client-pal.pal-dns-api-version
+    Description: Version of DNS API. This requires that PAL_NET_DNS_SUPPORT is defined. Value 0 = sync DNS, 1 = async DNS API for mbed-os 5.8 or older, 2 = async for mbed-os 5.9 or newer
+    Defined by: library:mbed-client-pal
+    No value set
+Name: mbed-client-pal.pal-max-frag-len
+    Description: Maximum fragment length value for the payload in one packet, doesnt include TLS header and encryption overhead. Is needed for constrainted devices having low MTU sizes, Value 0 = disabled, 1 = MBEDTLS_SSL_MAX_FRAG_LEN_512, 2= MBEDTLS_SSL_MAX_FRAG_LEN_1024, 3 = MBEDTLS_SSL_MAX_FRAG_LEN_2048, 4 = MBEDTLS_SSL_MAX_FRAG_LEN_4096
+    Defined by: library:mbed-client-pal
+    No value set
+Name: mbed-client-pal.rsa-required
+    Defined by: library:mbed-client-pal
+    No value set
+Name: mbed-client-pal.update-active-metadata-header-offset
+    Defined by: library:mbed-client-pal
+    No value set
+Name: mbed-client.coap-disable-obs-feature
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.disable-block-message
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.disable-bootstrap-feature
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.disable-delayed-response
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.disable-interface-description
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.disable-resource-type
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.dns-use-thread
+    Description: Not in used anymore
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.dtls_peer_max_timeout
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.event-loop-size
+    Defined by: library:mbed-client
+    Macro name: MBED_CONF_MBED_CLIENT_EVENT_LOOP_SIZE
+    Value: 1024 (set by library:mbed-client)
+Name: mbed-client.memory-optimized-api
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.reconnection-count
+    Defined by: library:mbed-client
+    Macro name: MBED_CONF_MBED_CLIENT_RECONNECTION_COUNT
+    Value: 3 (set by library:mbed-client)
+Name: mbed-client.reconnection-interval
+    Defined by: library:mbed-client
+    Macro name: MBED_CONF_MBED_CLIENT_RECONNECTION_INTERVAL
+    Value: 5 (set by library:mbed-client)
+Name: mbed-client.reconnection-loop
+    Description: Not in used anymore
+    Defined by: library:mbed-client
+    Macro name: MBED_CONF_MBED_CLIENT_RECONNECTION_LOOP
+    Value: 1 (set by library:mbed-client)
+Name: mbed-client.sn-coap-blockwise-max-time-data-stored
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.sn-coap-duplication-max-msgs-count
+    Defined by: library:mbed-client
+    Macro name: MBED_CONF_MBED_CLIENT_SN_COAP_DUPLICATION_MAX_MSGS_COUNT
+    Value: 5 (set by library:mbed-client)
+Name: mbed-client.sn-coap-max-blockwise-payload-size
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.sn-coap-max-incoming-message-size
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.sn-coap-resending-queue-size-bytes
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-client.sn-coap-resending-queue-size-msgs
+    Defined by: library:mbed-client
+    Macro name: MBED_CONF_MBED_CLIENT_SN_COAP_RESENDING_QUEUE_SIZE_MSGS
+    Value: 5 (set by library:mbed-client)
+Name: mbed-client.tcp-keepalive-interval
+    Defined by: library:mbed-client
+    Macro name: MBED_CONF_MBED_CLIENT_TCP_KEEPALIVE_INTERVAL
+    Value: 90 (set by library:mbed-client)
+Name: mbed-client.tls-max-retry
+    Defined by: library:mbed-client
+    No value set
+Name: mbed-cloud-client.disable-certificate-enrollment
+    Description: Enables or disables certificate enrollment feature
+    Defined by: library:mbed-cloud-client
+    No value set
+Name: mbed-cloud-client.external-sst-support
+    Description: Enables external secure storage feature (KVstore)
+    Defined by: library:mbed-cloud-client
+    No value set
+Name: mbed-cloud-client.update-download-protocol (required parameter)
+    Description: Set up download protocol for update firmware
+    Defined by: library:mbed-cloud-client
+    Macro name: MBED_CONF_MBED_CLOUD_CLIENT_UPDATE_DOWNLOAD_PROTOCOL
+    Value: MBED_CLOUD_CLIENT_UPDATE_DOWNLOAD_PROTOCOL_COAP (set by library:mbed-cloud-client)
+Name: mbed-cloud-client.update-storage
+    Description: Storage option for update image. Common values: ARM_UCP_FLASHIAP and ARM_UCP_FLASHIAP_BLOCKDEVICE.
+    Defined by: library:mbed-cloud-client
+    No value set
+Name: mbed-mesh-api.6lowpan-nd-channel
+    Description: RF channel to use when `channel_mask` is not defined. [0-26].
+    Defined by: library:mbed-mesh-api
+    No value set
+Name: mbed-mesh-api.6lowpan-nd-channel-mask
+    Description: Channel mask, bit-mask of channels to use. [0-0x07fff800]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_6LOWPAN_ND_CHANNEL_MASK
+    Value: 0x7fff800 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.6lowpan-nd-channel-page
+    Description: 0 for 2.4 GHz and 2 for sub-GHz radios.
+    Defined by: library:mbed-mesh-api
+    No value set
+Name: mbed-mesh-api.6lowpan-nd-device-type
+    Description: Device mode (NET_6LOWPAN_ROUTER or NET_6LOWPAN_HOST). Router is routing packets from other device, creating a mesh network.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_6LOWPAN_ND_DEVICE_TYPE
+    Value: NET_6LOWPAN_ROUTER (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.6lowpan-nd-panid-filter
+    Description: Beacon PAN ID filter, 0xffff means no filtering. [0-0xffff]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_6LOWPAN_ND_PANID_FILTER
+    Value: 0xffff (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.6lowpan-nd-psk-key
+    Description: Pre-shared network key. Byte array of 16 bytes. In form of: {0x00, 0x11, ... 0xff}
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_6LOWPAN_ND_PSK_KEY
+    Value: {0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf} (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.6lowpan-nd-psk-key-id
+    Description: PSK key ID when PSK is enabled.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_6LOWPAN_ND_PSK_KEY_ID
+    Value: 1 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.6lowpan-nd-sec-level
+    Description: Network security level (1-7). Use default `5`.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_6LOWPAN_ND_SEC_LEVEL
+    Value: 5 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.6lowpan-nd-security-mode
+    Description: NONE or PSK to use either no security, or pre-shared network key.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_6LOWPAN_ND_SECURITY_MODE
+    Value: NONE (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.heap-size
+    Description: Nanostack's heap size [bytes: 0-65534]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_HEAP_SIZE
+    Value: 32500 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.heap-stat-info
+    Description: Pointer to heap statistics `mem_stat_t` storage.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_HEAP_STAT_INFO
+    Value: NULL (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.heap-stat-info-definition
+    Description: Definition of heap statistics `mem_stat_t` storage.
+    Defined by: library:mbed-mesh-api
+    No value set
+Name: mbed-mesh-api.thread-config-channel
+    Description: RF channel to use. [11-26]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_CONFIG_CHANNEL
+    Value: 22 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-config-channel-mask
+    Description: Channel bit mask, 0x7ffff800 scans all channels. [0-0x07fff800]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_CONFIG_CHANNEL_MASK
+    Value: 0x7fff800 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-config-channel-page
+    Description: Channel page, 0 for 2.4 GHz radio.
+    Defined by: library:mbed-mesh-api
+    No value set
+Name: mbed-mesh-api.thread-config-commissioning-dataset-timestamp
+    Description: [48 bit timestamp seconds]-[15 bit timestamp ticks]-[U bit] (0-0xFFFFFFFFFFFFFFFF)
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_CONFIG_COMMISSIONING_DATASET_TIMESTAMP
+    Value: 0x10000 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-config-extended-panid
+    Description: Extended PAN ID. [8 byte array]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_CONFIG_EXTENDED_PANID
+    Value: {0xf1, 0xb5, 0xa1, 0xb2,0xc4, 0xd5, 0xa1, 0xbd } (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-config-ml-prefix
+    Description: Mesh Local prefix. [8 byte array]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_CONFIG_ML_PREFIX
+    Value: {0xfd, 0x0, 0x0d, 0xb8, 0x0, 0x0, 0x0, 0x0} (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-config-network-name
+    Description: Network name [string, max 16 characters]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_CONFIG_NETWORK_NAME
+    Value: "Thread Network" (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-config-panid
+    Description: Network identifier [0-0xFFFF]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_CONFIG_PANID
+    Value: 0x0700 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-config-pskc
+    Description: Pre-Shared Key for the Commissioner. [16 byte array]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_CONFIG_PSKC
+    Value: {0xc8, 0xa6, 0x2e, 0xae, 0xf3, 0x68, 0xf3, 0x46, 0xa9, 0x9e, 0x57, 0x85, 0x98, 0x9d, 0x1c, 0xd0} (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-device-type
+    Description: Supported device operating modes: MESH_DEVICE_TYPE_THREAD_ROUTER, MESH_DEVICE_TYPE_THREAD_SLEEPY_END_DEVICE, MESH_DEVICE_TYPE_THREAD_MINIMAL_END_DEVICE
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_DEVICE_TYPE
+    Value: MESH_DEVICE_TYPE_THREAD_ROUTER (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-master-key
+    Description: Network master key. [16 byte array]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_MASTER_KEY
+    Value: {0x10, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff} (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-pskd
+    Description: Human-scaled commissioning credentials. Uppercase alphanumeric string (0-9, A-Y excluding I, O, Q and Z), 6-32 characters.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_PSKD
+    Value: "ABCDEFGH" (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-security-policy
+    Description: Commissioning security policy bits [0-0xFF]
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_SECURITY_POLICY
+    Value: 255 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.thread-use-static-link-config
+    Description: True: Use the below link config, False: Use commissioning, ignore the below link config.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_THREAD_USE_STATIC_LINK_CONFIG
+    Value: 1 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.use-malloc-for-heap
+    Description: Use `malloc()` for reserving the Nanostack's internal heap.
+    Defined by: library:mbed-mesh-api
+    No value set
+Name: mbed-mesh-api.wisun-bc-channel-function
+    Description: Broadcast channel function.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_WISUN_BC_CHANNEL_FUNCTION
+    Value: 255 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.wisun-bc-dwell-interval
+    Description: Broadcast dwell interval. Range: 15-255 milliseconds
+    Defined by: library:mbed-mesh-api
+    No value set
+Name: mbed-mesh-api.wisun-bc-fixed-channel
+    Description: Default fixed channel
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_WISUN_BC_FIXED_CHANNEL
+    Value: 0xffff (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.wisun-bc-interval
+    Description: Broadcast interval. Duration between broadcast dwell intervals. Range: 0-16777216 milliseconds
+    Defined by: library:mbed-mesh-api
+    No value set
+Name: mbed-mesh-api.wisun-network-name
+    Description: default network name for wisun network
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_WISUN_NETWORK_NAME
+    Value: "NETWORK_NAME" (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.wisun-operating-class
+    Description: Operating class.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_WISUN_OPERATING_CLASS
+    Value: 255 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.wisun-operating-mode
+    Description: Operating mode.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_WISUN_OPERATING_MODE
+    Value: 255 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.wisun-regulatory-domain
+    Description: Regulator domain.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_WISUN_REGULATORY_DOMAIN
+    Value: 3 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.wisun-uc-channel-function
+    Description: Unicast channel function.
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_WISUN_UC_CHANNEL_FUNCTION
+    Value: 255 (set by library:mbed-mesh-api)
+Name: mbed-mesh-api.wisun-uc-dwell-interval
+    Description: Unicast dwell interval. Range: 15-255 milliseconds
+    Defined by: library:mbed-mesh-api
+    No value set
+Name: mbed-mesh-api.wisun-uc-fixed-channel
+    Description: Default fixed channel
+    Defined by: library:mbed-mesh-api
+    Macro name: MBED_CONF_MBED_MESH_API_WISUN_UC_FIXED_CHANNEL
+    Value: 0xffff (set by library:mbed-mesh-api)
+Name: mbed-trace.allocator
+    Defined by: library:mbed-trace
+    Macro name: MEM_ALLOC
+    Value: malloc (set by library:mbed-trace)
+Name: mbed-trace.deallocator
+    Defined by: library:mbed-trace
+    Macro name: MEM_FREE
+    Value: free (set by library:mbed-trace)
+Name: mbed-trace.enable
+    Description: Used to globally enable traces.
+    Defined by: library:mbed-trace
+    No value set
+Name: mbed-trace.fea-ipv6
+    Description: Used to globally disable ipv6 tracing features.
+    Defined by: library:mbed-trace
+    No value set
+Name: mbed-trace.max-level
+    Description: This flag is used to optimize the code size. For example, setting trace optimization level to TRACE_LEVEL_INFO will define all tr_debug() macros empty, which reduces the binary size. The possible optimization levels are TRACE_LEVEL_DEBUG, TRACE_LEVEL_INFO, TRACE_LEVEL_WARN, TRACE_LEVEL_ERROR and TRACE_LEVEL_CMD. To set the output tracing level, please use mbed_trace_config_set(TRACE_ACTIVE_LEVEL_INFO). The possible tracing levels for mbed_trace_config_set() are TRACE_ACTIVE_LEVEL_ALL, TRACE_ACTIVE_LEVEL_DEBUG (same as ALL), TRACE_ACTIVE_LEVEL_INFO, TRACE_ACTIVE_LEVEL_WARN, TRACE_ACTIVE_LEVEL_ERROR, TRACE_ACTIVE_LEVEL_CMD and TRACE_LEVEL_NONE.
+    Defined by: library:mbed-trace
+    No value set
+Name: mcr20a.provide-default
+    Description: Provide default NanostackRfpy. [true/false]
+    Defined by: library:mcr20a
+    No value set
+Name: minimal-printf.console-output
+    Description: Console output. Options: UART, SWO
+    Defined by: library:minimal-printf
+    Macro name: MBED_CONF_MINIMAL_PRINTF_CONSOLE_OUTPUT
+    Value: UART (set by library:minimal-printf)
+Name: minimal-printf.enable-64-bit
+    Description: Enable printing 64 bit integers
+    Defined by: library:minimal-printf
+    Macro name: MBED_CONF_MINIMAL_PRINTF_ENABLE_64_BIT
+    Value: 1 (set by library:minimal-printf)
+Name: minimal-printf.enable-floating-point
+    Description: Enable floating point printing
+    Defined by: library:minimal-printf
+    No value set
+Name: minimal-printf.set-floating-point-max-decimals
+    Description: Maximum number of decimals to be printed
+    Defined by: library:minimal-printf
+    Macro name: MBED_CONF_MINIMAL_PRINTF_SET_FLOATING_POINT_MAX_DECIMALS
+    Value: 6 (set by library:minimal-printf)
+Name: nanostack-eventloop.exclude_highres_timer
+    Description: Exclude high resolution timer from build
+    Defined by: library:nanostack-eventloop
+    No value set
+Name: nanostack-eventloop.use_platform_tick_timer
+    Description: Use platform provided low resolution tick timer for eventloop
+    Defined by: library:nanostack-eventloop
+    No value set
+Name: nanostack-hal.critical-section-usable-from-interrupt
+    Description: Make critical section API usable from interrupt context. Else a mutex is used as locking primitive. Consult arm_hal_interrupt.c for possible side effects on interrupt latency.
+    Defined by: library:nanostack-hal
+    No value set
+Name: nanostack-hal.event-loop-dispatch-from-application
+    Description: Application is responsible of message dispatch loop. Else launch a separate thread for event-loop.
+    Defined by: library:nanostack-hal
+    Macro name: MBED_CONF_NANOSTACK_HAL_EVENT_LOOP_DISPATCH_FROM_APPLICATION
+    Value: 1 (set by application[*])
+Name: nanostack-hal.event-loop-use-mbed-events
+    Description: Use Mbed OS global event queue for Nanostack event loop, rather than our own thread.
+    Defined by: library:nanostack-hal
+    No value set
+Name: nanostack-hal.event_loop_thread_stack_size
+    Description: Define event-loop thread stack size. [bytes]
+    Defined by: library:nanostack-hal
+    Macro name: MBED_CONF_NANOSTACK_HAL_EVENT_LOOP_THREAD_STACK_SIZE
+    Value: 6144 (set by library:nanostack-hal)
+Name: nanostack-hal.nvm_cfstore
+    Description: Use cfstore as a NVM storage. Else RAM simulation will be used
+    Defined by: library:nanostack-hal
+    No value set
+Name: nanostack.configuration
+    Description: Build time configuration. Refer to Handbook for valid values. Default: full stack
+    Defined by: library:nanostack
+    Macro name: MBED_CONF_NANOSTACK_CONFIGURATION
+    Value: nanostack_full (set by library:nanostack)
+Name: nsapi.default-cellular-apn
+    Defined by: library:nsapi
+    No value set
+Name: nsapi.default-cellular-password
+    Defined by: library:nsapi
+    No value set
+Name: nsapi.default-cellular-plmn
+    Defined by: library:nsapi
+    No value set
+Name: nsapi.default-cellular-sim-pin
+    Defined by: library:nsapi
+    No value set
+Name: nsapi.default-cellular-username
+    Defined by: library:nsapi
+    No value set
+Name: nsapi.default-mesh-type
+    Description: Configuration type for MeshInterface::get_default_instance(). [LOWPAN/THREAD]
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_DEFAULT_MESH_TYPE
+    Value: THREAD (set by library:nsapi)
+Name: nsapi.default-stack
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_DEFAULT_STACK
+    Value: LWIP (set by library:nsapi)
+Name: nsapi.default-wifi-password
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_DEFAULT_WIFI_PASSWORD
+    Value: "demoonly!" (set by application[*])
+Name: nsapi.default-wifi-security
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_DEFAULT_WIFI_SECURITY
+    Value: WPA_WPA2 (set by application[*])
+Name: nsapi.default-wifi-ssid
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_DEFAULT_WIFI_SSID
+    Value: "AccessNG" (set by application[*])
+Name: nsapi.dns-cache-size
+    Description: Number of cached host name resolutions
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_DNS_CACHE_SIZE
+    Value: 3 (set by library:nsapi)
+Name: nsapi.dns-response-wait-time
+    Description: How long the DNS translator waits for a reply from a server in milliseconds
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_DNS_RESPONSE_WAIT_TIME
+    Value: 5000 (set by library:nsapi)
+Name: nsapi.dns-retries
+    Description: Number of DNS query retries that the DNS translator makes per server, before moving on to the next server. Total retries/attempts is always limited by dns-total-attempts.
+    Defined by: library:nsapi
+    No value set
+Name: nsapi.dns-total-attempts
+    Description: Number of total DNS query attempts that the DNS translator makes
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_DNS_TOTAL_ATTEMPTS
+    Value: 3 (set by library:nsapi)
+Name: nsapi.present
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_PRESENT
+    Value: 1 (set by library:nsapi)
+Name: nsapi.socket-stats-enable
+    Description: Enable network socket statistics
+    Defined by: library:nsapi
+    No value set
+Name: nsapi.socket-stats-max-count
+    Description: Maximum number of socket statistics cached
+    Defined by: library:nsapi
+    Macro name: MBED_CONF_NSAPI_SOCKET_STATS_MAX_COUNT
+    Value: 10 (set by library:nsapi)
+Name: nvstore.area_1_address
+    Description: Area 1 address
+    Defined by: library:nvstore
+    No value set
+Name: nvstore.area_1_size
+    Description: Area 1 size
+    Defined by: library:nvstore
+    No value set
+Name: nvstore.area_2_address
+    Description: Area 2 address
+    Defined by: library:nvstore
+    No value set
+Name: nvstore.area_2_size
+    Description: Area 2 size
+    Defined by: library:nvstore
+    No value set
+Name: nvstore.enabled
+    Description: Enabled
+    Defined by: library:nvstore
+    Macro name: NVSTORE_ENABLED
+    Value: 1 (set by library:nvstore)
+Name: nvstore.max_keys
+    Description: Maximal number of allowed NVStore keys
+    Defined by: library:nvstore
+    Macro name: NVSTORE_MAX_KEYS
+    Value: 16 (set by library:nvstore)
+Name: platform.all-stats-enabled
+    Description: Set to 1 to enable all platform stats. When enabled the functions mbed_stats_*_get returns non-zero data. See mbed_stats.h for more information
+    Defined by: library:platform
+    No value set
+Name: platform.cpu-stats-enabled
+    Description: Set to 1 to enable cpu stats. When enabled the function mbed_stats_cpu_get returns non-zero data. See mbed_stats.h for more information
+    Defined by: library:platform
+    No value set
+Name: platform.crash-capture-enabled
+    Description: Enables crash context capture when the system enters a fatal error/crash.
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_CRASH_CAPTURE_ENABLED
+    Value: 1 (set by library:platform[K64F])
+Name: platform.cthunk_count_max
+    Description: The maximum CThunk objects used at the same time. This must be greater than 0 and less 256
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_CTHUNK_COUNT_MAX
+    Value: 8 (set by library:platform)
+Name: platform.default-serial-baud-rate
+    Description: Default baud rate for a Serial or RawSerial instance (if not specified in the constructor)
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_DEFAULT_SERIAL_BAUD_RATE
+    Value: 9600 (set by library:platform)
+Name: platform.error-all-threads-info
+    Description: Reports all the threads in the system as part of error report.
+    Defined by: library:platform
+    No value set
+Name: platform.error-decode-http-url-str
+    Description: HTTP URL string for ARM Mbed-OS Error Decode microsite
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_ERROR_DECODE_HTTP_URL_STR
+    Value: "\nFor more info, visit: https://armmbed.github.io/mbedos-error/?error=0x%08X" (set by library:platform)
+Name: platform.error-filename-capture-enabled
+    Description: Enables capture of filename and line number as part of error context capture, this works only for debug and develop builds. On release builds, filename capture is always disabled
+    Defined by: library:platform
+    No value set
+Name: platform.error-hist-enabled
+    Description: Enable for error history tracking.
+    Defined by: library:platform
+    No value set
+Name: platform.error-hist-size
+    Description: Set the number of most recent errors the system keeps in its history, needs error-hist-enabled set to true for this to work.
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_ERROR_HIST_SIZE
+    Value: 4 (set by library:platform)
+Name: platform.error-reboot-max
+    Description: Maximum number of auto reboots permitted when an error happens.
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_ERROR_REBOOT_MAX
+    Value: 1 (set by library:platform)
+Name: platform.fatal-error-auto-reboot-enabled
+    Description: Setting this to true enables auto-reboot on a fatal error.
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_FATAL_ERROR_AUTO_REBOOT_ENABLED
+    Value: 1 (set by library:platform[K64F])
+Name: platform.force-non-copyable-error
+    Description: Force compile time error when a NonCopyable object is copied
+    Defined by: library:platform
+    No value set
+Name: platform.heap-stats-enabled
+    Description: Set to 1 to enable heap stats. When enabled the function mbed_stats_heap_get returns non-zero data. See mbed_stats.h for more information
+    Defined by: library:platform
+    No value set
+Name: platform.max-error-filename-len
+    Description: Sets the maximum length of buffer used for capturing the filename in error context. This needs error-filename-capture-enabled feature.
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_MAX_ERROR_FILENAME_LEN
+    Value: 16 (set by library:platform)
+Name: platform.memory-tracing-enabled
+    Description: Enable tracing of each memory call by invoking a callback on each memory operation. See mbed_mem_trace.h in the HAL API for more information
+    Defined by: library:platform
+    No value set
+Name: platform.poll-use-lowpower-timer
+    Description: Enable use of low power timer class for poll(). May cause missing events.
+    Defined by: library:platform
+    No value set
+Name: platform.stack-stats-enabled
+    Description: Set to 1 to enable stack stats. When enabled the functions mbed_stats_stack_get and mbed_stats_stack_get_each return non-zero data. See mbed_stats.h for more information
+    Defined by: library:platform
+    No value set
+Name: platform.stdio-baud-rate
+    Description: Baud rate for stdio
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_STDIO_BAUD_RATE
+    Value: 115200 (set by application[*])
+Name: platform.stdio-buffered-serial
+    Description: Use UARTSerial driver to obtain buffered serial I/O on stdin/stdout/stderr. If false, unbuffered serial_getc and serial_putc are used directly.
+    Defined by: library:platform
+    No value set
+Name: platform.stdio-convert-newlines
+    Description: Enable conversion to standard newlines on stdin/stdout/stderr
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_STDIO_CONVERT_NEWLINES
+    Value: 1 (set by application[*])
+Name: platform.stdio-convert-tty-newlines
+    Description: Enable conversion to standard newlines on any tty FILE stream
+    Defined by: library:platform
+    No value set
+Name: platform.stdio-flush-at-exit
+    Description: Enable or disable the flush of standard I/O's at exit.
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_STDIO_FLUSH_AT_EXIT
+    Value: 1 (set by library:platform)
+Name: platform.sys-stats-enabled
+    Description: Set to 1 to enable system stats. When enabled the function mbed_stats_sys_get returns non-zero data. See mbed_stats.h for more information
+    Defined by: library:platform
+    No value set
+Name: platform.thread-stats-enabled
+    Description: Set to 1 to enable thread stats. When enabled the function mbed_stats_thread_get_each returns non-zero data. See mbed_stats.h for more information
+    Defined by: library:platform
+    No value set
+Name: platform.use-mpu
+    Description: Use the MPU if available to fault execution from RAM and writes to ROM. Can be disabled to reduce image size.
+    Defined by: library:platform
+    Macro name: MBED_CONF_PLATFORM_USE_MPU
+    Value: 1 (set by library:platform)
+Name: ppp-cell-iface.apn-lookup
+    Defined by: library:ppp-cell-iface
+    Macro name: MBED_CONF_PPP_CELL_IFACE_APN_LOOKUP
+    Value: 1 (set by library:ppp-cell-iface)
+Name: ppp-cell-iface.at-parser-buffer-size
+    Defined by: library:ppp-cell-iface
+    Macro name: MBED_CONF_PPP_CELL_IFACE_AT_PARSER_BUFFER_SIZE
+    Value: 256 (set by library:ppp-cell-iface)
+Name: ppp-cell-iface.at-parser-timeout
+    Defined by: library:ppp-cell-iface
+    Macro name: MBED_CONF_PPP_CELL_IFACE_AT_PARSER_TIMEOUT
+    Value: 8000 (set by library:ppp-cell-iface)
+Name: ppp-cell-iface.baud-rate
+    Defined by: library:ppp-cell-iface
+    Macro name: MBED_CONF_PPP_CELL_IFACE_BAUD_RATE
+    Value: 115200 (set by library:ppp-cell-iface)
+Name: rtos.idle-thread-stack-size
+    Description: The size of the idle thread's stack
+    Defined by: library:rtos
+    Macro name: MBED_CONF_RTOS_IDLE_THREAD_STACK_SIZE
+    Value: 512 (set by library:rtos)
+Name: rtos.idle-thread-stack-size-tickless-extra
+    Description: Additional size to add to the idle thread when tickless is enabled and LPTICKER_DELAY_TICKS is used
+    Defined by: library:rtos
+    Macro name: MBED_CONF_RTOS_IDLE_THREAD_STACK_SIZE_TICKLESS_EXTRA
+    Value: 256 (set by library:rtos)
+Name: rtos.main-thread-stack-size
+    Description: The size of the main thread's stack
+    Defined by: library:rtos
+    Macro name: MBED_CONF_RTOS_MAIN_THREAD_STACK_SIZE
+    Value: 4096 (set by library:rtos)
+Name: rtos.present
+    Defined by: library:rtos
+    Macro name: MBED_CONF_RTOS_PRESENT
+    Value: 1 (set by library:rtos)
+Name: rtos.thread-stack-size
+    Description: The default stack size of new threads
+    Defined by: library:rtos
+    Macro name: MBED_CONF_RTOS_THREAD_STACK_SIZE
+    Value: 4096 (set by library:rtos)
+Name: rtos.timer-thread-stack-size
+    Description: The size of the timer thread's stack
+    Defined by: library:rtos
+    Macro name: MBED_CONF_RTOS_TIMER_THREAD_STACK_SIZE
+    Value: 768 (set by library:rtos)
+Name: s2lp.provide-default
+    Description: Provide default NanostackRfpy. [true/false]
+    Defined by: library:s2lp
+    No value set
+Name: sd.CMD0_IDLE_STATE_RETRIES
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_CMD0_IDLE_STATE_RETRIES
+    Value: 5 (set by library:sd)
+Name: sd.CMD_TIMEOUT
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_CMD_TIMEOUT
+    Value: 10000 (set by library:sd)
+Name: sd.CRC_ENABLED
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_CRC_ENABLED
+    Value: 1 (set by library:sd)
+Name: sd.FSFAT_SDCARD_INSTALLED
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_FSFAT_SDCARD_INSTALLED
+    Value: 1 (set by library:sd)
+Name: sd.INIT_FREQUENCY
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_INIT_FREQUENCY
+    Value: 100000 (set by library:sd)
+Name: sd.SPI_CLK
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_SPI_CLK
+    Value: SPI_SCK (set by library:sd)
+Name: sd.SPI_CS
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_SPI_CS
+    Value: SPI_CS (set by library:sd)
+Name: sd.SPI_MISO
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_SPI_MISO
+    Value: SPI_MISO (set by library:sd)
+Name: sd.SPI_MOSI
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_SPI_MOSI
+    Value: SPI_MOSI (set by library:sd)
+Name: sd.TEST_BUFFER
+    Defined by: library:sd
+    Macro name: MBED_CONF_SD_TEST_BUFFER
+    Value: 8192 (set by library:sd)
+Name: spm.ipc_max_num_of_channels
+    Description: maximum number of PSA channels that can be opened at the same time
+    Defined by: library:spm
+    Macro name: MBED_CONF_SPM_IPC_MAX_NUM_OF_CHANNELS
+    Value: 10 (set by library:spm)
+Name: spm.ipc_max_num_of_messages
+    Description: maximum number of messages SPM Core can handle at a time
+    Defined by: library:spm
+    Macro name: MBED_CONF_SPM_IPC_MAX_NUM_OF_MESSAGES
+    Value: 10 (set by library:spm)
+Name: storage.default_kv
+    Description: A string name for the default kvstore configuration
+    Defined by: library:storage
+    Macro name: MBED_CONF_STORAGE_DEFAULT_KV
+    Value: kv (set by library:storage)
+Name: storage.storage_type
+    Description: Options are TDB_INTERNAL, TDB_EXTERNAL, TDB_EXTERNAL_NO_RBP, FILESYSTEM, FILESYSTEM_NO_RBP or default. If default, the storage type will be chosen according to the component defined in targets.json
+    Defined by: library:storage
+    Macro name: MBED_CONF_STORAGE_STORAGE_TYPE
+    Value: default (set by library:storage)
+Name: storage_filesystem.blockdevice
+    Description: Options are default, SPIF, DATAFASH, QSPIF or SD. If default, the block device will be chosen according to the component defined in targets.json
+    Defined by: library:storage_filesystem
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_BLOCKDEVICE
+    Value: default (set by library:storage_filesystem)
+Name: storage_filesystem.external_base_address
+    Description: The default will set start address to address 0
+    Defined by: library:storage_filesystem
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_EXTERNAL_BASE_ADDRESS
+    Value: 0 (set by library:storage_filesystem)
+Name: storage_filesystem.external_size
+    Description: Size in bytes of the external block device, if default value, the maximum size available is used.
+    Defined by: library:storage_filesystem
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_EXTERNAL_SIZE
+    Value: 0 (set by library:storage_filesystem)
+Name: storage_filesystem.filesystem
+    Description: Options are default, FAT or LITTLE. If default value the filesystem is chosen by the blockdevice type
+    Defined by: library:storage_filesystem
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_FILESYSTEM
+    Value: default (set by library:storage_filesystem)
+Name: storage_filesystem.folder_path
+    Description: Path for the working directory where the FileSystemStore stores the data
+    Defined by: library:storage_filesystem
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_FOLDER_PATH
+    Value: kvstore (set by library:storage_filesystem)
+Name: storage_filesystem.internal_base_address
+    Description: If default, base address is the first sector after the application code
+    Defined by: library:storage_filesystem
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_INTERNAL_BASE_ADDRESS
+    Value: 0 (set by library:storage_filesystem)
+Name: storage_filesystem.mount_point
+    Description: Where to mount the filesystem.
+    Defined by: library:storage_filesystem
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_MOUNT_POINT
+    Value: kv (set by library:storage_filesystem)
+Name: storage_filesystem.rbp_internal_size
+    Description: Default is the size of the 2 last sectors of internal flash
+    Defined by: library:storage_filesystem
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_RBP_INTERNAL_SIZE
+    Value: 0 (set by library:storage_filesystem)
+Name: storage_filesystem_no_rbp.blockdevice
+    Description: Options are default, SPIF, DATAFLASH, QSPIF or SD. If default the block device will be chosen by the defined component
+    Defined by: library:storage_filesystem_no_rbp
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_NO_RBP_BLOCKDEVICE
+    Value: default (set by library:storage_filesystem_no_rbp)
+Name: storage_filesystem_no_rbp.external_base_address
+    Description: The default will set start address to address 0
+    Defined by: library:storage_filesystem_no_rbp
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_NO_RBP_EXTERNAL_BASE_ADDRESS
+    Value: 0 (set by library:storage_filesystem_no_rbp)
+Name: storage_filesystem_no_rbp.external_size
+    Description: Size in bytes of the external block device, if default the maximum size available is used.
+    Defined by: library:storage_filesystem_no_rbp
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_NO_RBP_EXTERNAL_SIZE
+    Value: 0 (set by library:storage_filesystem_no_rbp)
+Name: storage_filesystem_no_rbp.filesystem
+    Description: Options are default, FAT or LITTLE. If default value the filesystem is chosen by the blockdevice type
+    Defined by: library:storage_filesystem_no_rbp
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_NO_RBP_FILESYSTEM
+    Value: default (set by library:storage_filesystem_no_rbp)
+Name: storage_filesystem_no_rbp.folder_path
+    Description: Path for the working directory where the FileSystemStore stores the data
+    Defined by: library:storage_filesystem_no_rbp
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_NO_RBP_FOLDER_PATH
+    Value: kvstore (set by library:storage_filesystem_no_rbp)
+Name: storage_filesystem_no_rbp.mount_point
+    Description: Where to mount the filesystem.
+    Defined by: library:storage_filesystem_no_rbp
+    Macro name: MBED_CONF_STORAGE_FILESYSTEM_NO_RBP_MOUNT_POINT
+    Value: kv (set by library:storage_filesystem_no_rbp)
+Name: storage_tdb_external.blockdevice
+    Description: Options are default, SPIF, DATAFASH, QSPIF or SD. If default the block device will be chosen by the defined component
+    Defined by: library:storage_tdb_external
+    Macro name: MBED_CONF_STORAGE_TDB_EXTERNAL_BLOCKDEVICE
+    Value: default (set by library:storage_tdb_external)
+Name: storage_tdb_external.external_base_address
+    Description: The default will set start address to address 0
+    Defined by: library:storage_tdb_external
+    Macro name: MBED_CONF_STORAGE_TDB_EXTERNAL_EXTERNAL_BASE_ADDRESS
+    Value: 0 (set by library:storage_tdb_external)
+Name: storage_tdb_external.external_size
+    Description: Size in bytes of the external block device, if default the maximum size available is used.
+    Defined by: library:storage_tdb_external
+    Macro name: MBED_CONF_STORAGE_TDB_EXTERNAL_EXTERNAL_SIZE
+    Value: 0 (set by library:storage_tdb_external)
+Name: storage_tdb_external.internal_base_address
+    Description: If default, the base address is set to the first sector after the application code ends.
+    Defined by: library:storage_tdb_external
+    Macro name: MBED_CONF_STORAGE_TDB_EXTERNAL_INTERNAL_BASE_ADDRESS
+    Value: 0 (set by library:storage_tdb_external)
+Name: storage_tdb_external.rbp_internal_size
+    Description: Default is the size of the 2 last sectors of internal flash
+    Defined by: library:storage_tdb_external
+    Macro name: MBED_CONF_STORAGE_TDB_EXTERNAL_RBP_INTERNAL_SIZE
+    Value: 0 (set by library:storage_tdb_external)
+Name: storage_tdb_external_no_rbp.blockdevice
+    Description: Options are default, SPIF, DATAFASH, QSPIF or SD. If default the block device will be chosen by the defined component
+    Defined by: library:storage_tdb_external_no_rbp
+    Macro name: MBED_CONF_STORAGE_TDB_EXTERNAL_NO_RBP_BLOCKDEVICE
+    Value: default (set by library:storage_tdb_external_no_rbp)
+Name: storage_tdb_external_no_rbp.external_base_address
+    Description: The default will set start address to address 0
+    Defined by: library:storage_tdb_external_no_rbp
+    Macro name: MBED_CONF_STORAGE_TDB_EXTERNAL_NO_RBP_EXTERNAL_BASE_ADDRESS
+    Value: 0 (set by library:storage_tdb_external_no_rbp)
+Name: storage_tdb_external_no_rbp.external_size
+    Description: Size in bytes of the external block device, if default the maximum size available is used.
+    Defined by: library:storage_tdb_external_no_rbp
+    Macro name: MBED_CONF_STORAGE_TDB_EXTERNAL_NO_RBP_EXTERNAL_SIZE
+    Value: 0 (set by library:storage_tdb_external_no_rbp)
+Name: storage_tdb_internal.internal_base_address
+    Description: If default, the base address is set to the first sector after the application code ends.
+    Defined by: library:storage_tdb_internal
+    Macro name: MBED_CONF_STORAGE_TDB_INTERNAL_INTERNAL_BASE_ADDRESS
+    Value: 0 (set by library:storage_tdb_internal)
+Name: storage_tdb_internal.internal_size
+    Description: Size of the FlashIAP block device. default size will be from internal_base_address till the end of the internal flash.
+    Defined by: library:storage_tdb_internal
+    Macro name: MBED_CONF_STORAGE_TDB_INTERNAL_INTERNAL_SIZE
+    Value: 0 (set by library:storage_tdb_internal)
+Name: target.boot-stack-size
+    Description: Define the boot stack size in bytes. This value must be a multiple of 8
+    Defined by: target:Target
+    Macro name: MBED_CONF_TARGET_BOOT_STACK_SIZE
+    Value: 0x400 (set by library:rtos[*])
+Name: target.console-uart-flow-control
+    Description: Console hardware flow control. Options: null, RTS, CTS, RTSCTS.
+    Defined by: target:Target
+    No value set
+Name: target.deep-sleep-latency
+    Description: Time in ms required to go to and wake up from deep sleep (max 10)
+    Defined by: target:Target
+    No value set
+Name: target.mpu-rom-end
+    Description: Last address of ROM protected by the MPU
+    Defined by: target:Target
+    Macro name: MBED_CONF_TARGET_MPU_ROM_END
+    Value: 0x0fffffff (set by target:Target)
+Name: target.network-default-interface-type
+    Description: Default network interface type. Typical options: null, ETHERNET, WIFI, CELLULAR, MESH
+    Defined by: target:Target
+    Macro name: MBED_CONF_TARGET_NETWORK_DEFAULT_INTERFACE_TYPE
+    Value: ETHERNET (set by target:K64F)
+Name: update-client.application-details
+    Description: Location in memory where the application information can be read.
+    Defined by: library:update-client
+    Macro name: MBED_CONF_UPDATE_CLIENT_APPLICATION_DETAILS
+    Value: (MBED_CONF_APP_FLASH_START_ADDRESS + 64*1024) (set by application[K64F])
+Name: update-client.bootloader-details
+    Description: Location in memory where the bootloader information can be read.
+    Defined by: library:update-client
+    Macro name: MBED_CONF_UPDATE_CLIENT_BOOTLOADER_DETAILS
+    Value: 0 (set by library:update-client)
+Name: update-client.firmware-header-version
+    Description: Version of the firmware metadata header.
+    Defined by: library:update-client
+    Macro name: MBED_CONF_UPDATE_CLIENT_FIRMWARE_HEADER_VERSION
+    Value: 0 (set by library:update-client)
+Name: update-client.http-resume-attempt-test-messages-enable
+    Description: Print messages indicating HTTP-resume actions for QA/test purposes.
+    Defined by: library:update-client
+    Macro name: ARM_UC_HTTP_RESUME_TEST_MESSAGES_ENABLE
+    Value: 0 (set by library:update-client)
+Name: update-client.http-resume-exponentiation-factor
+    Description: Multiplier for consecutive resume-attempt delay periods.
+    Defined by: library:update-client
+    Macro name: ARM_UC_HTTP_RESUME_EXPONENTIATION_FACTOR
+    Value: 2 (set by library:update-client)
+Name: update-client.http-resume-fragments-per-burst
+    Description: Number of fragments to be requested per HTTP GET from server.
+    Defined by: library:update-client
+    Macro name: ARM_UC_MULTI_FRAGS_PER_HTTP_BURST
+    Value: 64 (set by library:update-client)
+Name: update-client.http-resume-initial-delay-secs
+    Description: Initial delay for HTTP-resume actions after which period resume goes active.
+    Defined by: library:update-client
+    Macro name: ARM_UC_HTTP_RESUME_INITIAL_DELAY_SECS
+    Value: 5 (set by library:update-client)
+Name: update-client.http-resume-maximum-delay-secs
+    Description: Maximum delay for HTTP-resume actions after which period resume goes active.
+    Defined by: library:update-client
+    Macro name: ARM_UC_HTTP_RESUME_MAXIMUM_DELAY_SECS
+    Value: (60*60) (set by library:update-client)
+Name: update-client.http-resume-maximum-download-time-secs
+    Description: Period for HTTP-resume actions after which resume gives up and terminates.
+    Defined by: library:update-client
+    Macro name: ARM_UC_HTTP_RESUME_MAXIMUM_DOWNLOAD_TIME_SECS
+    Value: (7*24*60*60) (set by library:update-client)
+Name: update-client.storage-address
+    Description: When using address based storage (FlashIAP, Block Device), this is the starting address.
+    Defined by: library:update-client
+    Macro name: MBED_CONF_UPDATE_CLIENT_STORAGE_ADDRESS
+    Value: (64*1024*1024) (set by application[K64F])
+Name: update-client.storage-locations
+    Description: Number of equally sized locations the storage space should be split into.
+    Defined by: library:update-client
+    Macro name: MBED_CONF_UPDATE_CLIENT_STORAGE_LOCATIONS
+    Value: 1 (set by application[K64F])
+Name: update-client.storage-page
+    Description: Smallest write unit on storage device. Used for compile time check of download/write buffers.
+    Defined by: library:update-client
+    Macro name: MBED_CONF_UPDATE_CLIENT_STORAGE_PAGE
+    Value: 512 (set by library:update-client)
+Name: update-client.storage-size
+    Description: Total storage allocated.
+    Defined by: library:update-client
+    Macro name: MBED_CONF_UPDATE_CLIENT_STORAGE_SIZE
+    Value: (2*1024*1024) (set by application[K64F])
+
+Macros
+------
+NS_USE_EXTERNAL_MBED_TLS
+MBED_STACK_STATS_ENABLED=1
+ARM_UC_PROFILE_MBED_CLOUD_CLIENT=1
+MBEDTLS_CIPHER_MODE_CTR
+MBEDTLS_PSA_HAS_ITS_IO
+_RTE_
+MBED_CLOUD_CLIENT_UPDATE_STORAGE=ARM_UCP_FLASHIAP_BLOCKDEVICE
+UNITY_INCLUDE_CONFIG_H
+ARM_UC_USE_PAL_BLOCKDEVICE=1
+MBEDTLS_CMAC_C
+MBED_HEAP_STATS_ENABLED=1
+[mbed] Working path "/Users/janjon01/repos/pelion-ready-example" (program)
+[mbed] Exec "/usr/local/opt/python@2/bin/python2.7 /Users/janjon01/repos/pelion-ready-example/mbed-os/tools/get_config.py -t GCC_ARM -m K64F --source . -v" in "/Users/janjon01/repos/pelion-ready-example"
