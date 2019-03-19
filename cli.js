@@ -44,20 +44,15 @@ program
                 let mbedApp = null;
                 if (fs.existsSync(path)) {
                     let json = await promisify(fs.readFile.bind(fs))(path, 'utf-8');
-                    console.log('json', json);
                     try {
                         mbedApp = JSON.parse(json);
-                        console.log('OK done', mbedApp);
                     }
                     catch (ex) {
                         throw 'Parsing ' + path + ' failed (' + ex + ')';
                     }
-                    console.log('Does exist', path);
                 }
                 else {
                     mbedApp = {};
-                    console.log('Does not exist');
-                    throw 1;
                 }
                 if (!mbedApp.target_overrides) {
                     mbedApp.target_overrides = {};
