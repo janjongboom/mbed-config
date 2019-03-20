@@ -4,9 +4,11 @@ Proof of concept. Adds a visual interface for managing configuration for Mbed OS
 
 ![screenshot of mbed-config](docs/screenshot.png)
 
+![screenshot of mbed-config #2](docs/screenshot-2.png)
+
 ## Installation
 
-1. Install a recent version of Node.js.
+1. Install a recent version of [Node.js](https://nodejs.org/en/).
 1. Clone this library:
 
     ```

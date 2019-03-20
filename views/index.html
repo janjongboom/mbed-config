@@ -20,8 +20,8 @@
 
     <h2><span id="title">Menu</span></h2>
 
-    <ul class="options">
-    </ul>
+    <table class="options">
+    </table>
   </section>
 
   <script src="/socket.io/socket.io.js"></script>
@@ -31,29 +31,126 @@
       const macros = {{{macros}}};
       const config = {{{config}}};
 
-      let configByGroup = config.reduce((curr, c) => {
-        if (!curr[c.definedBy]) {
-          curr[c.definedBy] = [];
+      const groupDescriptions = {
+        'application': 'Settings defined by {{name}}',
+        'library:GEMALTO_CINTERION': 'Cinterion PLAS9 Cat 6 IoT Module',
+        'library:GENERIC_AT3GPP': 'Modules supporting the standard 3GPP AT commands',
+        'library:QUECTEL_BC95': 'Quectel BC95 NB-IoT Module',
+        'library:QUECTEL_BG96': 'Quectel BG96 LTE Cat M1/Cat NB1/EGPRS Module',
+        'library:QUECTEL_M26': 'Quectel M26 GSM/GPRS Module',
+        'library:QUECTEL_UG96': 'Quectel UG96 UMTS/HSPA Module',
+        'library:SARA4_PPP': 'u-blox SARA-R4/N4 LTE Cat M1/NB1 Module',
+        'library:TELIT_HE910': 'Telit HE910 HSPA+ LGA Module',
+        'library:UBLOX_AT': 'Generic u-blox module over AT commands (using IP stack in module)',
+        'library:UBLOX_PPP': 'Generic u-blox module over PPP interface (using IP stack in Mbed OS)',
+        'library:atmel-rf': 'Atmel AT86RF233 / AT86RF212B 802.15.4 transceiver',
+        'library:cellular': 'Cellular settings, such as radio technology and APN settings',
+        'library:drivers': 'Buffer sizes for built-in peripheral drivers',
+        'library:esp8266': 'ESP8266 WiFi Module',
+        'library:events': 'Stack sizes for shared event queues',
+        'library:filesystem': 'N/A',
+        'library:ism43362': 'InventekSys ISM43362 WiFi Module',
+        'library:littlefs': 'LittleFS settings, such as block size and buffer sizes',
+        'library:lora': 'LoRaWAN settings, such as frequency plan and connection keys',
+        'library:lwip': 'LwIP IPv4/IPv6 stack settings, such as feature support and buffer sizes',
+        'library:mbed-http': 'HTTP buffer sizes',
+        'library:mbed-mesh-api': '6LoWPAN/Thread/Wi-SUN stack settings, such as channel allocation',
+        'library:mbed-trace': 'Trace settings, such as trace level',
+        'library:mcr20a': 'NXP 2.4 GHz 802.15.4 transceiver',
+        'library:nanostack': 'Nanostack IPv6 stack settings',
+        'library:nsapi': 'Network settings, such as WiFi password, SIM PIN and maximum socket count',
+        'library:nvstore': 'NVStore Key/value storage settings, such as flash storage areas',
+        'library:platform': 'Mbed OS behavior, such as error reporting and enabling statistics',
+        'library:ppp-cell-iface': 'PPP cellular driver settings, such as buffer sizes and timeouts',
+        'library:rtos': 'Stack size configuration for main, idle and timer threads',
+        'library:s2lp': 'ST S2-LP sub-GHz 802.15.4 transceiver',
+        'library:storage': 'KVStore storage settings, specifies the storage type',
+        'library:storage_filesystem': 'KVStore FS type, sets block device and file system type',
+        'library:storage_filesystem_no_rbp': 'KVStore FS No RBP type, sets block device and file system type',
+        'library:storage_tdb_external': 'KVStore TDB External type, sets block device and file system type',
+        'library:storage_tdb_external_no_rbp': 'KVStore TDB External No RBP type, sets block device and file system type',
+        'library:storage_tdb_internal': 'KVStore TDB Internal type, sets block device and file system type',
+        'target': 'Target configuration, clock source, flow control, default interfaces, etc.'
+      };
+
+      const groupings = {
+        'Application': [ 'application' ],
+        'Mbed OS': [ 'library:drivers', 'library:events', 'library:mbed-trace', 'library:platform', 'library:rtos', 'target' ],
+        'Network settings': [ 'library:cellular', 'library:mbed-mesh-api', 'library:nsapi', 'library:ppp-cell-iface' ],
+        'Network stacks': [ 'library:lora', 'library:lwip', 'library:nanostack' ],
+        'Cellular drivers': [ 'library:GEMALTO_CINTERION', 'library:GENERIC_AT3GPP', 'library:QUECTEL_BC95', 'library:QUECTEL_BG96', 'library:QUECTEL_M26', 'library:QUECTEL_UG96', 'library:SARA4_PPP', 'library:TELIT_HE910', 'library:UBLOX_AT', 'library:UBLOX_PPP' ],
+        'WiFi drivers': [ 'library:esp8266', 'library:ism43362' ],
+        '802.15.4 drivers': [ 'library:atmel-rf', 'library:mcr20a', 'library:s2lp' ],
+        'KVStore': [ 'library:storage', 'library:storage_filesystem', 'library:storage_filesystem_no_rbp', 'library:storage_tdb_external', 'library:storage_tdb_external_no_rbp', 'library:storage_tdb_internal' ],
+        'Storage': [ 'library:filesystem', 'library:littlefs', 'library:nvstore' ],
+      };
+      const groupingsInverted = Object.keys(groupings).reduce((curr, g) => {
+        for (let lib of groupings[g]) {
+          curr[lib] = g;
         }
-        curr[c.definedBy].push(c);
+        return curr;
+      }, {});
+
+      // first group by definedBy
+      let configByGroup = config.reduce((curr, c) => {
+        let key = c.definedBy;
+        if (key.indexOf('target:') === 0) {
+          key = 'target';
+        }
+
+        if (key.indexOf('library:nanostack') === 0) {
+          key = 'library:nanostack';
+        }
+
+        if (!curr[key]) {
+          curr[key] = [];
+        }
+        curr[key].push(c);
+        return curr;
+      }, {});
+
+      // then group according to the groupings descriptor
+      const configByGroupGrouping = Object.keys(configByGroup).reduce((curr, groupName) => {
+        let category = groupingsInverted[groupName];
+        if (!category) {
+          console.log('cannot find', groupName);
+          category = 'Application';
+        }
+        if (!curr[category]) {
+          curr[category] = {};
+        }
+        curr[category][groupName] = configByGroup[groupName];
         return curr;
       }, {});
 
       function loadMenu(name) {
+        let menu = document.querySelector('#main-menu');
+        menu.innerHTML = '';
+
+        let groupName = name.replace('library:', '') + '.';
         location.hash = '#' + name;
-        document.querySelector('#main-menu .options').innerHTML = '';
-        document.querySelector('#main-menu #title').textContent = name;
-        configByGroup[name].forEach(g => {
-          var el = document.createElement('li');
-          var val = document.createElement('span');
+
+        let h2 = document.createElement('h2');
+        h2.textContent = name;
+
+        let table = document.createElement('table');
+        table.classList.add('options');
+
+        configByGroup[name].sort().forEach(g => {
+          // not overridable
+          if (/\.present$/.test(g.name)) return;
+
+          var el = document.createElement('tr');
+          var val = document.createElement('td');
           val.classList.add('value');
           val.textContent = typeof g.value !== 'undefined' ? g.value : 'Not Set';
+          val.title = val.textContent;
 
-          var name = document.createElement('span');
+          var name = document.createElement('td');
           name.classList.add('name');
-          name.textContent = g.name;
+          name.textContent = g.name.replace(groupName, '');
 
-          var desc = document.createElement('span');
+          var desc = document.createElement('td');
           if (g.description) {
             desc.textContent += g.description;
           }
@@ -65,21 +162,47 @@
             if (v === null) return;
 
             val.textContent = v;
+            val.title = val.textContent;
             g.value = v;
             socket.emit('change-value', g.name, v);
           }
-          document.querySelector('#main-menu .options').appendChild(el);
+          table.appendChild(el);
         });
+
+        menu.appendChild(h2);
+        menu.appendChild(table);
       }
 
       function loadMain() {
-        document.querySelector('#main-menu .options').innerHTML = '';
-        document.querySelector('#main-menu #title').textContent = 'Main menu';
-        Object.keys(configByGroup).sort().forEach(g => {
-          var el = document.createElement('li');
-          el.textContent = g;
-          el.onclick = () => loadMenu(g);
-          document.querySelector('#main-menu .options').appendChild(el);
+        let menu = document.querySelector('#main-menu');
+        menu.innerHTML = '';
+
+        Object.keys(groupings).forEach(gk => {
+          let h2 = document.createElement('h2');
+          h2.textContent = gk;
+
+          let table = document.createElement('table');
+          table.classList.add('options');
+
+          Object.keys(configByGroupGrouping[gk]).forEach(g => {
+            var el = document.createElement('tr');
+            var name = document.createElement('td');
+            name.classList.add('title');
+            name.textContent = g;
+            el.appendChild(name);
+
+            var desc = document.createElement('td');
+            if (groupDescriptions[g]) {
+              desc.textContent = groupDescriptions[g];
+            }
+            el.appendChild(desc);
+
+            el.onclick = () => loadMenu(g);
+            table.appendChild(el);
+          });
+
+          menu.appendChild(h2);
+          menu.appendChild(table);
         });
       }
 

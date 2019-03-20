@@ -4,7 +4,7 @@
 #logo { width: 167px; }
 body {
   font-family: "Lato", sans-serif;
-  margin: 0;
+  margin: 0 0 20px 0;
   padding: 0 20px;
   font-weight: 300;
   color: rgb(80, 79, 77);
@@ -113,27 +113,30 @@ h2 {
 
 .options {
   padding: 0;
+  width: 100%;
   border-bottom: solid 1px #333;
+  border-collapse: collapse;
 }
 
-.options li {
-  list-style: none;
-  padding: 10px;
+.options tr {
   border: solid 1px #333;
   border-bottom: none;
 }
-.options li:hover {
+.options tr:hover {
   background: rgb(199, 239, 245);
   cursor: pointer;
 }
-.options li {
-  display: flex;
+
+.options td {
+  padding: 10px;
 }
+
 .options .value {
-  min-width: 150px;
-  max-width: 150px;
+  min-width: 130px;
+  max-width: 130px;
   overflow-y: auto;
   font-family: monospace;
+  text-overflow: ellipsis;
 }
 
 .options .name {
@@ -141,4 +144,10 @@ h2 {
   max-width: 200px;
   overflow-y: auto;
   font-family: monospace;
+  text-overflow: ellipsis;
+}
+
+.options .title {
+  width: 30%;
+  font-weight: bold;
 }
