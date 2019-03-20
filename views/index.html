@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="/style.css">
   <link rel="manifest" href="/manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- (c) Jan Jongboom, 2019 -->
 </head>
 
 <body>
@@ -26,11 +28,17 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
+      /**
+       * This UI handling is quite the mess.
+       * Just a PoC!
+       */
       const socket = io.connect(location.origin);
 
+      // data we get from the server, injects it straight in
       const macros = {{{macros}}};
       const config = {{{config}}};
 
+      // mbed_lib.json does not have descriptions (yet?), we'll just provide them here
       const groupDescriptions = {
         'application': 'Settings defined by {{name}}',
         'library:GEMALTO_CINTERION': 'Cinterion PLAS9 Cat 6 IoT Module',
@@ -73,6 +81,10 @@
         'target': 'Target configuration, clock source, flow control, default interfaces, etc.'
       };
 
+      // so we need some groups defined. This list is complete for Mbed OS 5.11 (with default config)
+      // Everything that is not in this list will end up in application.
+      // Enabling storage drivers via components (e.g. QSPI) won't yield a nice description
+      // that's why we'd need it in mbed_lib.json
       const groupings = {
         'Application': [ 'application' ],
         'Mbed OS': [ 'library:drivers', 'library:events', 'library:mbed-trace', 'library:platform', 'library:rtos', 'target' ],
@@ -84,6 +96,7 @@
         'KVStore': [ 'library:storage', 'library:storage_filesystem', 'library:storage_filesystem_no_rbp', 'library:storage_tdb_external', 'library:storage_tdb_external_no_rbp', 'library:storage_tdb_internal' ],
         'Storage': [ 'library:filesystem', 'library:littlefs', 'library:nvstore' ],
       };
+      // invert the groups for easy lookup
       const groupingsInverted = Object.keys(groupings).reduce((curr, g) => {
         for (let lib of groupings[g]) {
           curr[lib] = g;
@@ -91,13 +104,15 @@
         return curr;
       }, {});
 
-      // first group by definedBy
+      // first group by definedBy in the config section
       let configByGroup = config.reduce((curr, c) => {
         let key = c.definedBy;
+        // group everything that starts with target:
         if (key.indexOf('target:') === 0) {
           key = 'target';
         }
 
+        // same with nanostack
         if (key.indexOf('library:nanostack') === 0) {
           key = 'library:nanostack';
         }
@@ -112,8 +127,8 @@
       // then group according to the groupings descriptor
       const configByGroupGrouping = Object.keys(configByGroup).reduce((curr, groupName) => {
         let category = groupingsInverted[groupName];
+        // not found? then it's application
         if (!category) {
-          console.log('cannot find', groupName);
           category = 'Application';
         }
         if (!curr[category]) {
@@ -123,21 +138,38 @@
         return curr;
       }, {});
 
+      // when going from main menu => detail view => back we want to retain original scroll position
+      // so store it here
+      let lastScrollY = 0;
+
+      // detail view (per library), this gets called from onhashchange on the document
       function loadMenu(name) {
+        // retain scroll position
+        lastScrollY = document.scrollingElement.scrollTop;
+
+        // reset scroll position to top, as we're switching to new view
+        document.scrollingElement.scrollTop = 0;
+
+        // grab the menu element and clear it
         let menu = document.querySelector('#main-menu');
         menu.innerHTML = '';
 
-        let groupName = name.replace('library:', '') + '.';
+        // technically not required, but let's do it to be sure
         location.hash = '#' + name;
 
+        // we don't want the library: prefix to be seen for every value
+        let groupName = name.replace('library:', '') + '.';
+
+        // create a header and a table, which is where we'll show all options
         let h2 = document.createElement('h2');
         h2.textContent = name;
 
         let table = document.createElement('table');
         table.classList.add('options');
 
+        // get all config options for this library and list them
         configByGroup[name].sort().forEach(g => {
-          // not overridable
+          // present values is not overridable, so skip it
           if (/\.present$/.test(g.name)) return;
 
           var el = document.createElement('tr');
@@ -157,10 +189,14 @@
           el.appendChild(val);
           el.appendChild(name);
           el.appendChild(desc);
+
+          // clicking the row will yield value prompt
           el.onclick = function() {
             let v = prompt('Enter new value for ' + g.name, g.value || '');
+            // Cancel yields null
             if (v === null) return;
 
+            // update UI and send back to server
             val.textContent = v;
             val.title = val.textContent;
             g.value = v;
@@ -173,10 +209,13 @@
         menu.appendChild(table);
       }
 
+      // Main menu
       function loadMain() {
+        // clear current content
         let menu = document.querySelector('#main-menu');
         menu.innerHTML = '';
 
+        // first we go over groupings, as it's already the order we want
         Object.keys(groupings).forEach(gk => {
           let h2 = document.createElement('h2');
           h2.textContent = gk;
@@ -184,7 +223,9 @@
           let table = document.createElement('table');
           table.classList.add('options');
 
+          // look at the categories under it (after processing)
           Object.keys(configByGroupGrouping[gk]).forEach(g => {
+            // and create a row
             var el = document.createElement('tr');
             var name = document.createElement('td');
             name.classList.add('title');
@@ -197,15 +238,22 @@
             }
             el.appendChild(desc);
 
-            el.onclick = () => loadMenu(g);
+            // click element changes hash => loads detail page (see onhashchange below)
+            el.onclick = () => location.hash = '#' + g;
             table.appendChild(el);
           });
 
           menu.appendChild(h2);
           menu.appendChild(table);
         });
+
+        // set scroll position back after loading the UI
+        if (lastScrollY) {
+          document.scrollingElement.scrollTop = lastScrollY;
+        }
       }
 
+      // hashchange function
       function handleHash() {
         if (!location.hash || location.hash === '' || location.hash === '#') {
           loadMain();
@@ -217,9 +265,8 @@
 
       window.onhashchange = handleHash;
 
+      // on page load, call the hashchange function, this will allow persistable URLs
       handleHash();
-
-      console.log(configByGroup);
   </script>
 
 </body>
